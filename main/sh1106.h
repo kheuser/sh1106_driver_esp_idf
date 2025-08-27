@@ -76,9 +76,9 @@ typedef struct {
     int _scDirection;
     PAGE_t _page[8];
     bool _flip;
-    i2c_port_t i2c_num;
+    i2c_port_t _i2c_num;
     i2c_master_bus_handle_t _i2c_bus_handle;
-    i2c_master_dev_handle_t _i3c_dev_handle;
+    i2c_master_dev_handle_t _i2c_dev_handle;
 } SH1106_t;
 
 void sh1106_init(SH1106_t* dev, int width, int height);

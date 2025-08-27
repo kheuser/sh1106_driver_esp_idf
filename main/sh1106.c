@@ -101,7 +101,7 @@ void sh1106_display_text(SH1106_t * dev, int page, const char * text, int text_l
 
 void sh1106_display_text_box1(SH1106_t * dev, int page, int seg, const char * text, int box_width, int text_len, bool invert, int delay)
 {
-    
+
 }
 
 void sh1106_display_text_box2(SH1106_t * dev, int page, int seg, const char * text, int box_width, int text_len, bool invert, int delay)
@@ -230,38 +230,6 @@ void sh1106_dump(SH1106_t dev)
 }
 
 void sh1106_dump_page(SH1106_t * dev, int page, int seg)
-{
-
-}
-
-
-
-void i2c_master_init(SH1106_t * dev, int16_t sda, int16_t scl, int16_t reset)
-{
-
-}
-
-void i2c_device_add(SH1106_t * dev, i2c_port_t i2c_num, int16_t reset, uint16_t i2c_address)
-{
-
-}
-
-void i2c_init(SH1106_t * dev, int width, int height)
-{
-
-}
-
-void i2c_display_image(SH1106_t * dev, int page, int seg, const uint8_t * images, int width)
-{
-
-}
-
-void i2c_contrast(SH1106_t * dev, int contrast)
-{
-
-}
-
-void i2c_hardware_scroll(SH1106_t * dev, sh1106_scroll_type_t scroll)
 {
 
 }
