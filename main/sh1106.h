@@ -2,6 +2,7 @@
 #define MAIN_SH1106_H_
 
 #include "driver/i2c.h"
+#include <i2c_types.h>
 
 #define OLED_I2C_ADDRESS 0x3C
 
@@ -76,13 +77,56 @@ typedef struct {
     PAGE_t _page[8];
     bool _flip;
     i2c_port_t i2c_num;
-#if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 2, 0))
     i2c_master_bus_handle_t _i2c_bus_handle;
     i2c_master_dev_handle_t _i3c_dev_handle;
 } SH1106_t;
 
 void sh1106_init(SH1106_t* dev, int width, int height);
+void sh1106_get_width(SH1106_t* dev);
+void sh1106_get_height(SH1106_t* dev);
+int sh1106_get_pages(SH1106_t * dev);
+void sh1106_show_buffer(SH1106_t * dev);
+void sh1106_set_buffer(SH1106_t * dev, const uint8_t * buffer);
+void sh1106_get_buffer(SH1106_t * dev, uint8_t * buffer);
+void sh1106_set_page(SH1106_t * dev, int page, const uint8_t * buffer);
+void sh1106_get_page(SH1106_t * dev, int page, uint8_t * buffer);
+void sh1106_display_image(SH1106_t * dev, int page, int seg, const uint8_t * images, int width);
+void sh1106_display_text(SH1106_t * dev, int page, const char * text, int text_len, bool invert);
+void sh1106_display_text_box1(SH1106_t * dev, int page, int seg, const char * text, int box_width, int text_len, bool invert, int delay);
+void sh1106_display_text_box2(SH1106_t * dev, int page, int seg, const char * text, int box_width, int text_len, bool invert, int delay);
+void sh1106_display_text_x3(SH1106_t * dev, int page, const char * text, int text_len, bool invert);
+void sh1106_clear_screen(SH1106_t * dev, bool invert);
+void sh1106_clear_line(SH1106_t * dev, int page, bool invert);
+void sh1106_contrast(SH1106_t * dev, int contrast);
+void sh1106_software_scroll(SH1106_t * dev, int start, int end);
+void sh1106_scroll_text(SH1106_t * dev, const char * text, int text_len, bool invert);
+void sh1106_scroll_clear(SH1106_t * dev);
+void sh1106_hardware_scroll(SH1106_t * dev, sh1106_scroll_type_t scroll);
+void sh1106_wrap_arround(SH1106_t * dev, sh1106_scroll_type_t scroll, int start, int end, int8_t delay);
+void _sh1106_bitmaps(SH1106_t * dev, int xpos, int ypos, const uint8_t * bitmap, int width, int height, bool invert);
+void sh1106_bitmaps(SH1106_t * dev, int xpos, int ypos, const uint8_t * bitmap, int width, int height, bool invert);
+void _sh1106_pixel(SH1106_t * dev, int xpos, int ypos, bool invert);
+void _sh1106_line(SH1106_t * dev, int x1, int y1, int x2, int y2,  bool invert);
+void _sh1106_circle(SH1106_t * dev, int x0, int y0, int r, unsigned int opt, bool invert);
+void _sh1106_disc(SH1106_t * dev, int x0, int y0, int r, unsigned int opt, bool invert);
+void _sh1106_cursor(SH1106_t * dev, int x0, int y0, int r, bool invert);
+void sh1106_invert(uint8_t *buf, size_t blen);
+void sh1106_flip(uint8_t *buf, size_t blen);
+uint8_t sh1106_copy_bit(uint8_t src, int srcBits, uint8_t dst, int dstBits);
+uint8_t sh1106_rotate_byte(uint8_t ch1);
+void sh1106_fadeout(SH1106_t * dev);
+void sh1106_rotate_image(uint8_t *image, bool flip);
+void sh1106_display_rotate_text(SH1106_t * dev, int seg, const char * text, int text_len, bool invert);
+void sh1106_dump(SH1106_t dev);
+void sh1106_dump_page(SH1106_t * dev, int page, int seg);
 
+
+void i2c_master_init(SH1106_t * dev, int16_t sda, int16_t scl, int16_t reset);
+void i2c_device_add(SH1106_t * dev, i2c_port_t i2c_num, int16_t reset, uint16_t i2c_address);
+void i2c_init(SH1106_t * dev, int width, int height);
+void i2c_display_image(SH1106_t * dev, int page, int seg, const uint8_t * images, int width);
+void i2c_contrast(SH1106_t * dev, int contrast);
+void i2c_hardware_scroll(SH1106_t * dev, sh1106_scroll_type_t scroll);
 
 
 #endif
